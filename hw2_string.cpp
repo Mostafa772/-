@@ -96,8 +96,9 @@ char* OpenFile(FILE* fptr, int size_of_file) {
 }
 
 int WriteInFile (EndAndBeginning strings[], int* num_of_lines, bool same_string, char* string) {
-    puts("\nWRITING\n");
+    
     FILE *fp = fopen("Output.txt","r+");
+    
     fseek(fp, 0 ,SEEK_END);
 
     if (fp == nullptr)
@@ -106,6 +107,7 @@ int WriteInFile (EndAndBeginning strings[], int* num_of_lines, bool same_string,
 
         return -1;
     }
+    
     // write to the text file
     if(!same_string) {
         for (size_t i = 0; i < *num_of_lines ; ++i) {
@@ -120,10 +122,10 @@ int WriteInFile (EndAndBeginning strings[], int* num_of_lines, bool same_string,
     } else {
         fputs(string, fp);
     }
-    // close the file
+    
     fprintf(fp, "\n\n************************ END OF THIS WRITING SESSION ***********************************\n\n");
+    
     fclose(fp);
-    //
 
     return 1;
 }
@@ -136,12 +138,15 @@ void Sort(char* text, int* size, int* num_of_lines) {
     char* x = strchr(text, '\n');
 
     for (size_t i = 1; i <= *num_of_lines; ++i){
+        
         x = strchr(x, '\n') + 1;
+        
         pointers_strings[i].begin = x;
+        
         pointers_strings[i - 1].end = x - 1;
-        printf("the_pointer_ begin: %c\n",*(pointers_strings[i].begin) );
-        printf("the_pointer_END: %c\n",*pointers_strings[i-1].end );
+        
     }
+    
     pointers_strings[*num_of_lines - 1].end = &text[*size - 1];
 
     QuickSort(pointers_strings, 0, *num_of_lines, true);
@@ -172,68 +177,7 @@ int main() {
 
     Sort(text, &size, &num_of_lines);
 
-/*
-    WriteInFile();
-    if(WriteInFile() == -1) {
-        puts("Couldn't read file");
-    };
-*/
     printf("num_of_lines: %d size: %d", num_of_lines, size);
 
-
-    //printf("%s", text);
     return 0;
 }
-/*
-
-    for (size_t i = 0; i < *num_of_lines ; ++i) {
-        size_t j =0;
-        for(int j = 0; ;++j){
-            if(pointers_strings[i].begin +j == pointers_strings[i].end){
-                break;
-            }
-            printf("%c", *(pointers_strings[i].begin+j));
-        }
-        printf("      i: %lu\n", i);
-    }
-
- */
-
-/*
-    printf("the_pointer_ begin: %c\n",*(pointers_strings[i].begin) );
-    printf("the_pointer_END: %c\n",*pointers_strings[i-1].end );
-
- bool CompEndBeginning (EndAndBeginning a, EndAndBeginning b) {
-   size_t j = 0;
-   puts("comp1\n");
-   while(*a.begin == *b.begin){
-       puts("comp2\n");
-       a.begin = a.begin + j;
-       b.begin = b.begin + j;
-       j++;
-   }
-   if((int)*a.begin < (int)*b.begin) {
-       return true;
-   } else {
-       return true;
-   }
-}
-
-
-for (size_t i = 0; i < *num_of_lines ; ++i) {
-        for(int j = 0; ;++j){
-            if(pointers_strings[i].begin + j == (pointers_strings[i].end + 1)){
-                break;
-            }
-            printf("%c", *(pointers_strings[i].begin+j));
-        }
-        printf("      i: %lu\n", i);
-    }
-
-
-    for (size_t i = 0; i < *size; ++i){
-        if (text[i] == '\n'){
-            printf("%lu  %c\n",i, text[i-1]);
-        }
-    }
- */
